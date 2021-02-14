@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <style>
+        /* th{
+            /* text-align: center; 
+        } */
+    </style>
+    <title>Covid Updates</title>
+</head>
+
+<body>
+    <script>
+        fetch('https://api.covid19api.com/summary')
+            .then((apidata) => {
+                // console.log(apidata);
+                return apidata.json();
+            }).then((actualdata) => {
+                // console.log(`Country Name is: ${actualdata.Countries[76].Country}`);
+                // console.log(`New confirmed cases is: ${actualdata.Countries[76].NewConfirmed}`);
+                // console.log(`Deaths of today: ${actualdata.Countries[76].NewDeaths}`);
+                // console.log(` Recovered cases is: ${actualdata.Countries[76].NewRecovered} `);
+                // console.log(` Total Deaths in ${actualdata.Countries[76].Country} is: ${actualdata.Countries[76].TotalDeaths} `);
+                // console.log(` Total Recovered cases in ${actualdata.Countries[76].Country} is: ${actualdata.Countries[76].TotalRecovered} `);
+                // console.log(` Total Confirmed in ${actualdata.Countries[76].Country} is: ${actualdata.Countries[76].TotalConfirmed} `);
+
+                // console.log(`  New Deaths on ${actualdata.Global.Date} globally ${actualdata.Global.NewDeaths}`);
+                // console.log(`  Total Deaths is  globally ${actualdata.Global.TotalDeaths}`);
+                // console.log(`  New Confirmed Cases ${actualdata.Global.Date} is  globally ${actualdata.Global.NewConfirmed}`);
+                // console.log(`  Total confirmed cases is  globally ${actualdata.Global.TotalConfirmed}`);
+                // console.log(`  Total Recovered cases is  globally ${actualdata.Global.TotalRecovered}`);
+                // console.log(`  New Recovered cases on ${actualdata.Global.Date} is  globally ${actualdata.Global.NewRecovered}`);
+                const tbdoy = document.getElementById("tbody");
+                let html = "";
+                const data = actualdata.Countries;//
+                // const countryCode=["IN","BD","CN","NP","PK"];//logic 
+                for (let index = 0; index < data.length; index++) {
+                    // if (countryCode.includes(data[index].CountryCode) ) {}//logic
+                    html += `<tr><td>${index+1}</td><td>${data[index].Country}</td><td>${data[index].NewConfirmed}</td><td>${data[index].NewRecovered}</td><td>${data[index].NewDeaths}</td><td>${data[index].TotalConfirmed}</td><td>${data[index].TotalRecovered}</td><td>${data[index].TotalDeaths}</td> </tr>`
+
+
+
+                }
+                // html+=`<tr><td>0</td><td>${data.Country}</td><td>${data.TotalConfirmed}</td><td>${data.TotalRecovered}</td><td>${data.TotalDeaths}</td> </tr>`
+
+                tbdoy.innerHTML = html;
+
+
+                console.log(actualdata);
+            }).catch((error) => {
+                console.log(error);
+            });
+
+           setInterval(updateTime,1000);
+
+           function updateTime(){
+             time.innerHTML = new Date(); 
+           }
+
+
+
+
+    </script>
+    <div class="container">
+    <h2 style="text-align: center;color: burlywood; ">Covid Updates On <span id="time"></span></h2>
+    <hr>
+    <table class=" table table-border table-hover">
+        <thead>
+            <th>ID</th>
+            <th>Country Name</th>
+            <th>NewConfirmed </th>
+            <th>NewRecovered</th>
+            <th>NewDeaths</th>
+            <th>Total Confirmed Cases</th>
+            <th> Total Recovered Cases</th>
+            <th>Total Deaths</th>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+
+</html>
